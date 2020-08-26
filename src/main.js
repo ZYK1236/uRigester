@@ -4,7 +4,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import './style/global.styl'
 import store from './store/store';
-import { Form, FormModel, Input, Button, Select, message, Icon, Checkbox, Alert, Layout, Menu, Switch, Breadcrumb, Radio, Divider ,notification,Table} from 'ant-design-vue';
+import { Form, FormModel, Input, Button, Select, message, Icon, Checkbox, Alert, Layout, Menu, Switch, Breadcrumb, Radio, Divider ,notification,Table, Modal} from 'ant-design-vue';
 
 
 
@@ -28,6 +28,7 @@ Vue.use(Breadcrumb);
 Vue.use(Radio);
 Vue.use(Divider);
 Vue.use(Table);
+Vue.use(Modal);
 
 
 

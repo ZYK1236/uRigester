@@ -5,14 +5,28 @@
         type="primary"
         :disabled="!hasSelected"
         :loading="loading"
-        @click="start"
-      >
-        发送面试通知短信
-      </a-button>
+        @click="activateModal"
+      >发送面试通知短信</a-button>
+      <a-modal v-model="isVisible_1" title="短信信息" @ok="checkIfLegal">
+        <a-input v-model="time" placeholder="时间" style="margin-top:20px">
+          <a-icon slot="prefix" type="clock-circle" />
+        </a-input>
+        <a-alert message="时间不得为空！" banner style="margin-top:5px" v-if="isTimeIllegal" />
+
+        <a-input v-model="location" placeholder="地点" style="margin-top:20px">
+          <a-icon slot="prefix" type="home" />
+        </a-input>
+        <a-alert message="地址不得为空！" banner style="margin-top:5px" v-if="isLocatinIllegal" />
+
+        <a-input v-model="phoneNumber" placeholder="联系电话" style="margin-top:20px">
+          <a-icon slot="prefix" type="phone" />
+        </a-input>
+
+        <a-alert message="电话格式有误！" banner style="margin-top:5px" v-if="isPhoneNumberIllegal" />
+      </a-modal>
+
       <span style="margin-left: 8px">
-        <template v-if="hasSelected">
-          {{ `Selected ${selectedRowKeys.length} items` }}
-        </template>
+        <template v-if="hasSelected">{{ `Selected ${selectedRowKeys.length} items` }}</template>
       </span>
     </div>
     <a-table
@@ -82,12 +96,19 @@ export default {
   data() {
     return {
       columns,
+      isVisible_1: false,
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       pageSetter: {
         total: 50,
       },
       data: [],
+      time: "",
+      location: "",
+      phoneNumber: "",
+      isTimeIllegal: false,
+      isLocatinIllegal: false,
+      isPhoneNumberIllegal: false,
     };
   },
   computed: {
@@ -96,7 +117,42 @@ export default {
     },
   },
   methods: {
+    activateModal() {
+      this.isVisible_1 = true;
+    },
+    checkIfLegal() {
+      if (this.time === "") {
+        this.isTimeIllegal = true;
+      } else {
+        this.isTimeIllegal = false;
+      }
+
+      if (this.location === "") {
+        this.isLocatinIllegal = true;
+      } else {
+        this.isLocatinIllegal = false;
+      }
+
+      if (this.phoneNumber[0] !== "1" || this.phoneNumber.length !== 11) {
+        this.isPhoneNumberIllegal = true;
+      } else {
+        this.isPhoneNumberIllegal = false;
+      }
+
+      if (
+        !(
+          this.isTimeIllegal ||
+          this.isLocatinIllegal ||
+          this.isPhoneNumberIllegal
+        )
+      ) {
+        this.isVisible_1 = false;
+        this.start();
+      }
+    },
     async start() {
+      /**这里弹出对话框 */
+
       let userId = [];
       this.selectedRowKeys.forEach((element) => {
         let re = this.data[element].userId;
@@ -106,9 +162,9 @@ export default {
         userId,
         departmentName: store.state.home.name,
         organizationName: store.state.login.organizationName,
-        timeSlot: "明天",
-        place: "大活",
-        telNo: "11010101123",
+        timeSlot: this.time,
+        place: this.location,
+        telNo: this.phoneNumber,
       });
       this.loading = true;
       this.loading = false;
@@ -127,3 +183,4 @@ export default {
   },
 };
 </script>
+
