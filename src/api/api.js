@@ -54,6 +54,7 @@ const Api = {
     });
   },
 
+  // 获取表格数据
   getUnfirstMsg(data) {
     return service({
       method: "get",
@@ -100,9 +101,34 @@ const Api = {
     return service({
       method: "get",
       url: "/department/members",
-      params: data
-    })
-  }
+      params: data,
+    });
+  },
+
+  // 状态改变
+  setToLow(data) {
+    return service({
+      method: "post",
+      url: "/interview/status/first/eliminate",
+      data,
+    });
+  },
+  setToPass(data) {
+    return service({
+      method: "post",
+      url: "/interview/status/first/pass",
+      data,
+    });
+  },
+
+  //发短信
+  postSecondMessage(data) {
+    return service({
+      method: "post",
+      url: "/message/interview/second",
+      data
+    });
+  },
 };
 
 export default Api;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 0px">
       <a-button type="danger" @click="low">
         不通过
       </a-button>
@@ -76,24 +76,15 @@ export default {
       pageSize: 1000,
       departmentName: store.state.home.name,
     });
-    const data_2 = await Api.getUnSecondMsg({
-      organizationId: store.state.login.organizationID,
-      pageNum: 1,
-      pageSize: 1000,
-      departmentName: store.state.home.name,
-    });
 
     this.pageSetter.total = data.total;
-    this.second = data_2.data.list;
     this.data = this.data.concat(data.list);
     let i = 0;
     this.data.forEach((element) => {
       element.key = i++;
-      this.second.forEach((element_2) => {
-        if (element_2.userStuNum == element.userStuNum) {
-          element.userName = `<span style="color: #60b911">${element.userName} (二面待面试)</span>`;
-        }
-      });
+    });
+    this.data.forEach((element) => {
+      console.log(element.key);
     });
   },
   data() {
@@ -124,18 +115,49 @@ export default {
       }, 1000);
     },
     onSelectChange(selectedRowKeys) {
-      console.log("selectedRowKeys changed: ", selectedRowKeys);
+      console.log(
+        "selectedRowKeys changed: ",
+        selectedRowKeys,
+        this.data[selectedRowKeys[selectedRowKeys.length - 1]]
+      );
       this.selectedRowKeys = selectedRowKeys;
     },
-    low() {
+    async low() {
       let low = [];
+      let lowId = [];
+      let tempData = [];
+      let i = 0;
+
       this.selectedRowKeys.forEach((element) => {
+        i++;
         low.push(this.data[element]);
+        lowId.push(this.data[element].userId);
+        this.data.splice(element, 1, -1);
       });
+
+      this.pageSetter.total = this.data.total - i;
+      this.data.forEach((element) => {
+        console.log(element);
+        if (element !== -1) {
+          tempData.push(element);
+        }
+      });
+
+      this.data = tempData;
+      this.selectedRowKeys = [];
+
       store.commit({
         type: "setLow",
         low,
       });
+
+      await Api.setToLow({
+        organizationId: store.state.login.organizationID,
+        departmentId: store.state.login.departmentID,
+        departmentName: store.state.home.name,
+        userId: lowId,
+      });
+
       this.$notification.open({
         message: "消息提示",
         description: "成功修改",
@@ -145,25 +167,46 @@ export default {
     },
     async pass() {
       let pass = [];
+      let passId = [];
+      let tempData = [];
+      let i = 0;
+
       this.selectedRowKeys.forEach((element) => {
-        pass.push(this.data[element].userId);
-        this.data[
-          element
-        ].userName = ` <span style="color: #60b911">${this.data[element].userName} (二面待面试)</span> `;
+        i++;
+        pass.push(this.data[element]);
+        passId.push(this.data[element].userId);
+        this.data.splice(element, 1, -1);
       });
-      await Api.addSecondMsg({
+
+      this.data.forEach((element) => {
+        if (element !== -1) {
+          tempData.push(element);
+        }
+      });
+
+      this.pageSetter.total = this.data.total - i;
+      this.data = tempData;
+      this.selectedRowKeys = [];
+
+      store.commit({
+        type: "setUnsecond",
+        pass,
+      });
+
+      await Api.setToPass({
         organizationId: store.state.login.organizationID,
         departmentId: store.state.login.departmentID,
         departmentName: store.state.home.name,
-        userId: pass,
+        userId: passId,
       });
+
       this.$notification.open({
         message: "消息提示",
         description: "成功修改",
         icon: <a-icon type="smile" style="color: #108ee9" />,
         duration: 2,
       });
-    },
+    }
   },
 };
 </script>

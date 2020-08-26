@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 0px">
       <a-button
         type="primary"
         :disabled="!hasSelected"

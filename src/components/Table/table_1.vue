@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 0px">
+      <span style="margin-left: 8px">
+        <template v-if="hasSelected">
+          {{ `Selected ${selectedRowKeys.length} items` }}
+        </template>
+      </span>
       <a-button
         type="primary"
         :disabled="!hasSelected"
@@ -9,11 +14,6 @@
       >
         发送面试通知短信
       </a-button>
-      <span style="margin-left: 8px">
-        <template v-if="hasSelected">
-          {{ `Selected ${selectedRowKeys.length} items` }}
-        </template>
-      </span>
     </div>
     <a-table
       :row-selection="{

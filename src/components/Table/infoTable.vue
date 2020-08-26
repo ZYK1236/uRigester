@@ -1,18 +1,14 @@
 <template>
   <div>
     <div>
-      <div style="margin-bottom: 16px">
+      <div style="margin-bottom: 0px">
         <span style="color:rgb(35, 130, 224);fontSize:20px">
-          {{
-          tableTitle
-          }}
+          {{ tableTitle }}
         </span>
 
         <span style="margin-left: 8px">
           <template v-if="hasSelected">
-            {{
-            `Selected ${selectedRowKeys.length} items`
-            }}
+            {{ `Selected ${selectedRowKeys.length} items` }}
           </template>
         </span>
       </div>
@@ -20,62 +16,71 @@
       <a-table
         :rowSelection="{
           selectedRowKeys: selectedRowKeys,
-          onChange: onSelectChange
+          onChange: onSelectChange,
         }"
         :columns="tableColumns"
         :dataSource="computedData"
         size="middle"
       >
-        <tr
-          slot="name"
-          slot-scope="text"
-          :style="nameStyleController(text)"
-        >{{ text }}{{stateInfo(text)}}</tr>
+        <tr slot="name" slot-scope="text" :style="nameStyleController(text)">
+          {{
+            text
+          }}{{
+            stateInfo(text)
+          }}
+        </tr>
       </a-table>
 
       <div>
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(1)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(1) > -1 && computedData.length !== 0"
           @click="funcExportOffer"
-        >导出录取通知</a-button>
+          >导出录取通知</a-button
+        >
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(2)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(2) > -1 && computedData.length !== 0"
           @click="funcProduceTable"
-        >生成部员名单</a-button>
+          >生成部员名单</a-button
+        >
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(3)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(3) > -1 && computedData.length !== 0"
           @click="funcInterviewMessage"
-        >发布面试通知</a-button>
+          >发布面试通知</a-button
+        >
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(4)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(4) > -1 && computedData.length !== 0"
           @click="funcOffer"
-        >录取</a-button>
+          >录取</a-button
+        >
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(5)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(5) > -1 && computedData.length !== 0"
           @click="funcMoveStageSec"
-        >晋升至二面</a-button>
+          >晋升至二面</a-button
+        >
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(6)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(6) > -1 && computedData.length !== 0"
           @click="funcMoveStageSec"
-        >捞回二面</a-button>
+          >捞回二面</a-button
+        >
         <a-button
           class="buttonstyle"
           size="large"
-          v-if="buttonList.indexOf(7)>-1 && computedData.length !== 0"
+          v-if="buttonList.indexOf(7) > -1 && computedData.length !== 0"
           @click="funcEliminate"
-        >淘汰</a-button>
+          >淘汰</a-button
+        >
       </div>
     </div>
   </div>
@@ -97,7 +102,7 @@ export default {
       data,
       prefabOutput,
       selectedRowKeysList: [],
-      selectedRowKeys: []
+      selectedRowKeys: [],
     };
   },
   computed: {
@@ -146,10 +151,10 @@ export default {
         ret.push(this.computedData[i].name);
       }
       return ret;
-    }
+    },
   },
   watch: {
-    $route: "changeSelectedKeys"
+    $route: "changeSelectedKeys",
   },
   created: function() {
     for (let i = 0; i < this.prefabOutput.length; i++) {
@@ -173,8 +178,8 @@ export default {
     funcOffer: Methods.funcOffer,
     funcMoveStageSec: Methods.funcMoveStageSec,
     funcEliminate: Methods.funcEliminate,
-    funcSelectedClear: Methods.funcSelectedClear
-  }
+    funcSelectedClear: Methods.funcSelectedClear,
+  },
 };
 </script>
 

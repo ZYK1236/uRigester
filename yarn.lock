@@ -9,7 +9,7 @@
   dependencies:
     tinycolor2 "^1.4.1"
 
-"@ant-design/icons-vue@^2.0.0":
+
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/@ant-design/icons-vue/download/@ant-design/icons-vue-2.0.0.tgz?cache=0&sync_timestamp=1584960103387&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design%2Ficons-vue%2Fdownload%2F%40ant-design%2Ficons-vue-2.0.0.tgz#0357f5010a404e9f34a87a4b41b2a08df691dbce"
   integrity sha1-A1f1AQpATp80qHpLQbKgjfaR284=

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 0px">
       <a-button type="danger" @click="low">
         不通过
       </a-button>
@@ -16,7 +16,7 @@
     <a-table
       :row-selection="{
         selectedRowKeys: selectedRowKeys,
-        onChange: onSelectChange
+        onChange: onSelectChange,
       }"
       :columns="columns"
       :data-source="data"

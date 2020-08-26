@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 0px">
       <a-button
         type="primary"
         :disabled="!hasSelected"
@@ -72,15 +72,12 @@ export default {
       departmentName: store.state.home.name,
     });
 
-    this.data = this.data
-      .concat(data.list)
-      .concat(store.state.department.unSecond);
+    this.data = this.data.concat(data.list);
     let i = 0;
     this.data.forEach((element) => {
       element.key = i++;
     });
     this.pageSetter.total = this.data.length;
-    // this.data = this.data.concat(data.list).concat(store.state.department.unSecond)
   },
   data() {
     return {
@@ -99,13 +96,29 @@ export default {
     },
   },
   methods: {
-    start() {
+    async start() {
+      let userId = [];
+      this.selectedRowKeys.forEach((element) => {
+        let re = this.data[element].userId;
+        userId.push(re);
+      });
+      await Api.postSecondMessage({
+        userId,
+        departmentName: store.state.home.name,
+        organizationName: store.state.login.organizationName,
+        timeSlot: "明天",
+        place: "大活",
+        telNo: "11010101123",
+      });
       this.loading = true;
-      // ajax request after empty completing
-      setTimeout(() => {
-        this.loading = false;
-        this.selectedRowKeys = [];
-      }, 1000);
+      this.loading = false;
+      this.selectedRowKeys = [];
+      this.$notification.open({
+        message: "消息提示",
+        description: "成功发送",
+        icon: <a-icon type="smile" style="color: #108ee9" />,
+        duration: 2,
+      });
     },
     onSelectChange(selectedRowKeys) {
       console.log("selectedRowKeys changed: ", selectedRowKeys);

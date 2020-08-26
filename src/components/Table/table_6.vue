@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 16px">
+    <div style="margin-bottom: 0px">
       <span style="margin-left: 8px">
         <template v-if="hasSelected">
           {{ `Selected ${selectedRowKeys.length} items` }}
@@ -24,37 +24,34 @@ import store from "../../store/store";
 
 const columns = [
   {
+    title: "学号",
+    dataIndex: "userStuNum",
+  },
+  {
     title: "姓名",
     dataIndex: "userName",
+    slots: { title: "customTitle" },
     scopedSlots: { customRender: "name" },
   },
   {
-    title: "性格",
-    dataIndex: "param1Score",
+    title: "性别",
+    dataIndex: "userSex",
   },
   {
-    title: "礼貌",
-    dataIndex: "param2Score",
+    title: "电话",
+    dataIndex: "userTel",
   },
   {
-    title: "技术水平",
-    dataIndex: "param3Score",
+    title: "QQ",
+    dataIndex: "userQQNum",
   },
   {
-    title: store.state.department.param4,
-    dataIndex: "param4Score",
+    title: "学院",
+    dataIndex: "userCollege",
   },
   {
-    title: store.state.department.param5,
-    dataIndex: "param5Score",
-  },
-  {
-    title: "综评",
-    dataIndex: "overview",
-  },
-  {
-    title: "详情",
-    dataIndex: "detail",
+    title: "专业",
+    dataIndex: "userProfession",
   },
 ];
 
