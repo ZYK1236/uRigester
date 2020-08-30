@@ -4,9 +4,7 @@
       <a-spin size="large" :spinning="spinning" />
     </div>
     <div v-if="!spinning">
-      <h2 style="color: #188ffd">
-        *面试官微信小程序id(微信小程序头像下方)，面试官只能增加不能删除
-      </h2>
+      <h2 style="color: #188ffd">*面试官微信小程序id(微信小程序头像下方)，面试官只能增加不能删除</h2>
       <a-select
         mode="tags"
         style="width: 100%"
@@ -29,16 +27,10 @@
       <h2 id="title">*当前评价参数(必须5个)</h2>
       <div id="checkBox">
         <div>
-          <a-checkbox @change="onCheckAllChange" :checked="checkAll"
-            >Check all</a-checkbox
-          >
+          <a-checkbox @change="onCheckAllChange" :checked="checkAll">Check all</a-checkbox>
         </div>
         <br />
-        <a-checkbox-group
-          :options="plainOptions"
-          v-model="checkedList"
-          @change="onChange"
-        />
+        <a-checkbox-group :options="plainOptions" v-model="checkedList" @change="onChange" />
         <a-select
           mode="tags"
           style="width: 17%"
@@ -49,9 +41,7 @@
       <a-divider />
       <div id="button">
         <a-button size="large" disabled="true">查看二维码</a-button>
-        <a-button size="large" type="primary" @click="submit"
-          >修改/确认</a-button
-        >
+        <a-button size="large" type="primary" @click="submit">修改/确认</a-button>
       </div>
     </div>
   </div>
@@ -154,21 +144,32 @@ export default {
           organizationName: store.state.login.organizationName,
         };
 
-        await Api.addInterviewEr({
-          departmentId: store.state.login.departmentID,
-          userId: this.defaultWeChat,
-        });
+        try {
+          await Api.addInterviewEr({
+            departmentId: store.state.login.departmentID,
+            userId: this.defaultWeChat,
+          });
 
-        await Api.addInterviewMsg(msg);
-        this.$notification.open({
-          message: "消息提示",
-          description: "成功修改，正在刷新页面",
-          icon: <a-icon type="smile" style="color: #108ee9" />,
-          duration: 2,
-        });
+          await Api.addInterviewMsg(msg);
+
+          this.$notification.open({
+            message: "消息提示",
+            description: "成功修改，正在刷新页面",
+            icon: <a-icon type="smile" style="color: #108ee9" />,
+            duration: 2,
+          });
+        } catch (error) {
+          this.$notification.open({
+            message: "消息提示",
+            description: "后端又出错啦",
+            icon: <a-icon type="dislike" style="color: red" />,
+            duration: 2,
+          });
+        }
+
         setTimeout(() => {
           this.$router.go(0);
-        }, 1000000);
+        }, 1000);
       }
     },
   },
@@ -176,22 +177,31 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-#select
-  margin: 20px 0
-#title
-  margin-top: 30px
-  color: #188ffd
-#radio_group
-  margin-bottom: 15px
-#button
-  display: flex
-  flex-direction: row
-  justify-content: space-around
-.spin-wrap
+#select {
+  margin: 20px 0;
+}
+
+#title {
+  margin-top: 30px;
+  color: #188ffd;
+}
+
+#radio_group {
+  margin-bottom: 15px;
+}
+
+#button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.spin-wrap {
   text-align: center;
   background: rgba(0, 0, 0, 0);
   border-radius: 4px;
   margin-bottom: 20px;
   padding: 30px 50px;
   margin: 20px 0;
+}
 </style>
