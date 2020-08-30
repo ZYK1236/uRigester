@@ -47,6 +47,10 @@ const Methods = {
             } catch (error) {
               console.log(error);
             }
+            this.$store.commit({
+              type: "SET_DEPARTMENTNAME",
+              departmentName: result.data.t.departmentName,
+            });
             this.status = "success";
             setTimeout(() => {
               this.$router.push({ name: "Home" });

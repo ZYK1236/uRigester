@@ -8,7 +8,7 @@
 
         <span style="margin-left: 8px">
           <template v-if="hasSelected">
-            {{ `Selected ${selectedRowKeys.length} items` }}
+            {{ `当前已选择${selectedRowKeys.length} 个目标` }}
           </template>
         </span>
       </div>
@@ -21,6 +21,7 @@
         :columns="tableColumns"
         :dataSource="computedData"
         size="middle"
+        :loading="loading"
       >
         <tr slot="name" slot-scope="text" :style="nameStyleController(text)">
           {{
@@ -103,6 +104,7 @@ export default {
       prefabOutput,
       selectedRowKeysList: [],
       selectedRowKeys: [],
+      loading: true
     };
   },
   computed: {

@@ -120,13 +120,42 @@ const Api = {
       data,
     });
   },
+  setToLow_2(data) {
+    return service({
+      method: "post",
+      url: "/interview/status/retest/eliminate",
+      data,
+    });
+  },
+  enrollPeople(data) {
+    return service({
+      method: "post",
+      url: "/interview/status/enroll",
+      data,
+    });
+  },
+  backToRetest(data) {
+    return service({
+      method: "post",
+      url: "/interview/status/retest/check",
+      data,
+    });
+  },
 
   //发短信
+  postFirstMessage(data) {
+    return service({
+      method: "post",
+      url: "/message/interview/first",
+      data,
+    });
+  },
+
   postSecondMessage(data) {
     return service({
       method: "post",
       url: "/message/interview/second",
-      data
+      data,
     });
   },
 };

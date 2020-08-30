@@ -83,7 +83,13 @@ export default {
       show: false,
       loading: false,
       result: "#", //转态存储
-      party: ["青志协会", "校科协", "学生会", "团委"],
+      party: ["青年志愿者协会", "校团委", "校学生会", "社联"],
+      partyId: {
+        "青年志愿者协会": 0,
+        "校团委": 1,
+        "校学生会": 2,
+        "社联": 3
+      },
       ruleForm: {
         party: "",
         pass: "",
@@ -137,6 +143,7 @@ export default {
             console.log(this.ruleForm);
             const data = {
               organizationName: this.ruleForm.party,
+              organizationId: this.partyId[this.ruleForm.party],
               departmentName: this.ruleForm.party + this.ruleForm.branch,
               departmentAccount: this.ruleForm.name,
               departmentPwd: this.ruleForm.pass
