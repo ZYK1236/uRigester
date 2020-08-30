@@ -1,49 +1,58 @@
 <template>
   <div id="setting">
-    <h2 style="color: #188ffd">*当前面试官微信号(貌似现在只能添加不能修改)</h2>
-    <a-select
-      mode="tags"
-      style="width: 100%"
-      @change="handleChange"
-      :defaultValue="defaultWeChat"
-      placeholder="输入微信ID"
-    ></a-select>
-    <h2 id="title">*当前面试轮次</h2>
-    <a-radio-group
-      @change="demo"
-      :defaultValue="1"
-      :value="turns"
-      buttonStyle="solid"
-      id="radio_group"
-    >
-      <a-radio-button value="1">一轮</a-radio-button>
-      <a-radio-button value="2">二轮</a-radio-button>
-    </a-radio-group>
-
-    <h2 id="title">*当前评价参数(必须5个)</h2>
-    <div id="checkBox">
-      <div>
-        <a-checkbox @change="onCheckAllChange" :checked="checkAll"
-          >Check all</a-checkbox
-        >
-      </div>
-      <br />
-      <a-checkbox-group
-        :options="plainOptions"
-        v-model="checkedList"
-        @change="onChange"
-      />
+    <div class="spin-wrap" v-if="spinning">
+      <a-spin size="large" :spinning="spinning" />
+    </div>
+    <div v-if="!spinning">
+      <h2 style="color: #188ffd">
+        *面试官微信小程序id(微信小程序头像下方)，面试官只能增加不能删除
+      </h2>
       <a-select
         mode="tags"
-        style="width: 17%"
-        @change="handleChange_2"
-        placeholder="自定义评价参数,按回车确认"
+        style="width: 100%"
+        @change="handleChange"
+        :defaultValue="defaultWeChat"
+        placeholder="输入微信ID"
       ></a-select>
-    </div>
-    <a-divider />
-    <div id="button">
-      <a-button size="large" disabled=true>查看二维码</a-button>
-      <a-button size="large" type="primary" @click="submit">修改/确认</a-button>
+      <h2 id="title">*当前面试轮次</h2>
+      <a-radio-group
+        @change="demo"
+        :defaultValue="1"
+        :value="turns"
+        buttonStyle="solid"
+        id="radio_group"
+      >
+        <a-radio-button value="1">一轮</a-radio-button>
+        <a-radio-button value="2">二轮</a-radio-button>
+      </a-radio-group>
+
+      <h2 id="title">*当前评价参数(必须5个)</h2>
+      <div id="checkBox">
+        <div>
+          <a-checkbox @change="onCheckAllChange" :checked="checkAll"
+            >Check all</a-checkbox
+          >
+        </div>
+        <br />
+        <a-checkbox-group
+          :options="plainOptions"
+          v-model="checkedList"
+          @change="onChange"
+        />
+        <a-select
+          mode="tags"
+          style="width: 17%"
+          @change="handleChange_2"
+          placeholder="自定义评价参数,按回车确认"
+        ></a-select>
+      </div>
+      <a-divider />
+      <div id="button">
+        <a-button size="large" disabled="true">查看二维码</a-button>
+        <a-button size="large" type="primary" @click="submit"
+          >修改/确认</a-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -51,20 +60,21 @@
 import Api from "../../api/api.js";
 import store from "../../store/store.js";
 const plainOptions = ["性格", "礼貌", "技术水平"];
-const defaultCheckedList = ["性格","礼貌","技术水平"];
+const defaultCheckedList = ["性格", "礼貌", "技术水平"];
 
 export default {
   async mounted() {
     const { data } = await Api.getInterviewEr(store.state.login.departmentID);
     const data_2 = await Api.getInterviewMsg(store.state.login.departmentID);
 
+    this.spinning = false;
     this.defaultWeChat.push(...data);
     this.turns = data_2.data.interviewRounds + "";
     store.commit({
-      type: 'setParam',
+      type: "setParam",
       param4: data_2.data.param4Name,
-      param5: data_2.data.param5Name
-    })
+      param5: data_2.data.param5Name,
+    });
     if (this.plainOptions.length === 3) {
       this.plainOptions.push(data_2.data.param4Name, data_2.data.param5Name);
     }
@@ -78,6 +88,7 @@ export default {
       valueLength: 0,
       watchedValue: [],
       turns: "1",
+      spinning: true,
     };
   },
   watch: {
@@ -132,12 +143,15 @@ export default {
       } else {
         const msg = {
           departmentId: store.state.login.departmentID,
+          departmentName: store.state.login.departmentName,
           interviewRounds: this.turns,
           param1Name: this.checkedList[0],
           param2Name: this.checkedList[1],
           param3Name: this.checkedList[2],
           param4Name: this.checkedList[3],
           param5Name: this.checkedList[4],
+          organizationId: store.state.login.organizationID,
+          organizationName: store.state.login.organizationName,
         };
 
         await Api.addInterviewEr({
@@ -154,7 +168,7 @@ export default {
         });
         setTimeout(() => {
           this.$router.go(0);
-        }, 1000);
+        }, 1000000);
       }
     },
   },
@@ -173,4 +187,11 @@ export default {
   display: flex
   flex-direction: row
   justify-content: space-around
+.spin-wrap
+  text-align: center;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  margin: 20px 0;
 </style>

@@ -1,9 +1,6 @@
 <template>
   <div>
     <div style="margin-bottom: 0px">
-      <span style="margin-left: 8px">
-        <template v-if="hasSelected">{{ `Selected ${selectedRowKeys.length} items` }}</template>
-      </span>
       <a-button
         type="primary"
         :disabled="!hasSelected"
@@ -27,6 +24,14 @@
 
         <a-alert message="电话格式有误！" banner style="margin-top:5px" v-if="isPhoneNumberIllegal" />
       </a-modal>
+      
+      <span style="margin-left: 8px">
+        <template v-if="hasSelected">
+          {{
+          `当前已选择${selectedRowKeys.length} 个目标`
+          }}
+        </template>
+      </span>
     </div>
     <a-table
       :row-selection="{
@@ -36,45 +41,46 @@
       :columns="columns"
       :data-source="data"
       :pagination="pageSetter"
+      :loading="loading"
     />
   </div>
 </template>
 <script>
-import Api from "../../api/api";
-import store from "../../store/store";
+import Api from '../../api/api'
+import store from '../../store/store'
 
 const columns = [
   {
-    title: "学号",
-    dataIndex: "userStuNum",
+    title: '学号',
+    dataIndex: 'userStuNum'
   },
   {
-    title: "姓名",
-    dataIndex: "userName",
-    slots: { title: "customTitle" },
-    scopedSlots: { customRender: "name" },
+    title: '姓名',
+    dataIndex: 'userName',
+    slots: { title: 'customTitle' },
+    scopedSlots: { customRender: 'name' }
   },
   {
-    title: "性别",
-    dataIndex: "userSex",
+    title: '性别',
+    dataIndex: 'userSex'
   },
   {
-    title: "电话",
-    dataIndex: "userTel",
+    title: '电话',
+    dataIndex: 'userTel'
   },
   {
-    title: "QQ",
-    dataIndex: "userQQNum",
+    title: 'QQ',
+    dataIndex: 'userQQNum'
   },
   {
-    title: "学院",
-    dataIndex: "userCollege",
+    title: '学院',
+    dataIndex: 'userCollege'
   },
   {
-    title: "专业",
-    dataIndex: "userProfession",
-  },
-];
+    title: '专业',
+    dataIndex: 'userProfession'
+  }
+]
 
 export default {
   async mounted() {
@@ -82,15 +88,16 @@ export default {
       organizationId: store.state.login.organizationID,
       pageNum: 1,
       pageSize: 1000,
-      departmentName: store.state.home.name,
-    });
+      departmentName: store.state.home.name
+    })
 
-    this.pageSetter.total = data.total;
-    this.data = this.data.concat(data.list);
-    let i = 0;
+    this.loading = false
+    this.pageSetter.total = data.total
+    this.data = this.data.concat(data.list)
+    let i = 0
     this.data.forEach((element) => {
-      element.key = i++;
-    });
+      element.key = i++
+    })
   },
   data() {
     return {
@@ -98,44 +105,45 @@ export default {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       pageSetter: {
-        total: 50,
+        total: 0
       },
       data: [],
-      time: "",
-      location: "",
-      phoneNumber: "",
+      time: '',
+      location: '',
+      phoneNumber: '',
       isTimeIllegal: false,
       isLocatinIllegal: false,
       isPhoneNumberIllegal: false,
       isVisible_1: false,
-    };
+      loading: true
+    }
   },
   computed: {
     hasSelected() {
-      return this.selectedRowKeys.length > 0;
-    },
+      return this.selectedRowKeys.length > 0
+    }
   },
   methods: {
     activateModal() {
-      this.isVisible_1 = true;
+      this.isVisible_1 = true
     },
     checkIfLegal() {
-      if (this.time === "") {
-        this.isTimeIllegal = true;
+      if (this.time === '') {
+        this.isTimeIllegal = true
       } else {
-        this.isTimeIllegal = false;
+        this.isTimeIllegal = false
       }
 
-      if (this.location === "") {
-        this.isLocatinIllegal = true;
+      if (this.location === '') {
+        this.isLocatinIllegal = true
       } else {
-        this.isLocatinIllegal = false;
+        this.isLocatinIllegal = false
       }
 
-      if (this.phoneNumber[0] !== "1" || this.phoneNumber.length !== 11) {
-        this.isPhoneNumberIllegal = true;
+      if (this.phoneNumber[0] !== '1' || this.phoneNumber.length !== 11) {
+        this.isPhoneNumberIllegal = true
       } else {
-        this.isPhoneNumberIllegal = false;
+        this.isPhoneNumberIllegal = false
       }
 
       if (
@@ -145,40 +153,39 @@ export default {
           this.isPhoneNumberIllegal
         )
       ) {
-        this.isVisible_1 = false;
-        this.start();
+        this.isVisible_1 = false
+        this.start()
       }
     },
     async start() {
       /**这里弹出对话框 */
-
-      let userId = [];
+      this.loading = true
+      let userId = []
       this.selectedRowKeys.forEach((element) => {
-        let re = this.data[element].userId;
-        userId.push(re);
-      });
-      await Api.postSecondMessage({
+        let re = this.data[element].userId
+        userId.push(re)
+      })
+      await Api.postFirstMessage({
         userId,
         departmentName: store.state.home.name,
         organizationName: store.state.login.organizationName,
         timeSlot: this.time,
         place: this.location,
-        telNo: this.phoneNumber,
-      });
-      this.loading = true;
-      this.loading = false;
-      this.selectedRowKeys = [];
+        telNo: this.phoneNumber
+      })
+      this.loading = false
+      this.selectedRowKeys = []
       this.$notification.open({
-        message: "消息提示",
-        description: "成功发送",
+        message: '消息提示',
+        description: '成功发送',
         icon: <a-icon type="smile" style="color: #108ee9" />,
-        duration: 2,
-      });
+        duration: 2
+      })
     },
     onSelectChange(selectedRowKeys) {
-      console.log("selectedRowKeys changed: ", selectedRowKeys);
-      this.selectedRowKeys = selectedRowKeys;
-    },
-  },
-};
+      console.log('selectedRowKeys changed: ', selectedRowKeys)
+      this.selectedRowKeys = selectedRowKeys
+    }
+  }
+}
 </script>

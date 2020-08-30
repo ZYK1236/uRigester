@@ -21,6 +21,7 @@ const Methods = {
      * 2.e.key == 0时对应的title为'我的部员';e.key == 1时对应的title为'一面';其他同理
      */
     handleClick(e) {
+        console.log(e.key);
         e.key *= 1;
         if (e.key === 0) {
             this.clickedTitle = this.title[0];
@@ -31,7 +32,7 @@ const Methods = {
         }
         else {
             this.clickedTitle =
-                e.key <= 6 && e.key > 4 ? this.title[2] : this.title[3];
+                e.key <= 7 && e.key > 5 ? this.title[2] : this.title[3];
         }
         this.current = e.key + '';
         this.clickedHandle = this.handle[e.key];

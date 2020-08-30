@@ -4,6 +4,7 @@ const state = {
     login: false,
     token: '',
     departmentID: 0,
+    departmentName: '',
     organizationID: 0,
     organizationName: ''
 }
@@ -21,6 +22,11 @@ const mutations = {
     [types.SET_DEPARTMENT](state,payload) {
         state.departmentID = payload.departmentID
     },
+
+    SET_DEPARTMENTNAME(state,payload) {
+        state.departmentName = payload.departmentName
+    },
+
     [types.SET_ORGANIZATIONID](state,payload) {
         state.organizationID = payload.organizationID
     },
