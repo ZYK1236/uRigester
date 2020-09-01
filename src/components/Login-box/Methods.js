@@ -6,7 +6,7 @@ const Methods = {
    * @param {object} values是一个对象即values.userName和values.password
    * 通过vuex更改登录状态
    */
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     this.form.validateFields(async (err, values) => {
       const data = {
@@ -66,6 +66,16 @@ const Methods = {
         this.status = "error";
       }
     });
+
+    const data_2 = await Api.getInterviewMsg(
+      this.$store.state.login.departmentID
+    );
+
+    const turns = data_2.data.interviewRounds + "";
+    this.$store.commit({
+      type: "SET_TURNS",
+      turns,
+    });
   },
 
   /**
@@ -75,7 +85,12 @@ const Methods = {
     if (this.$store.state.login.login === true) {
       this.$router.push({ name: "Home" });
     } else {
-      console.log("未登录");
+      this.$notification.open({
+        message: "消息提示",
+        description: "当前不在已登陆状态",
+        icon: <a-icon type="frown" style="color: red" />,
+        duration: 2,
+      });
     }
   },
 };

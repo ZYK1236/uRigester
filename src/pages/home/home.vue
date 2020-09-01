@@ -9,7 +9,7 @@
     />
     <a-layout v-if="!show">
       <a-layout id="components-layout-demo-top-side-2">
-        <a-layout-sider width="200" style="background: #fff">
+        <a-layout-sider width="200" style="background: #fff" v-model="collapsed" collapsible>
           <a-menu
             :theme="theme"
             @click="handleClick"
@@ -31,22 +31,25 @@
 
             <a-sub-menu key="1" @titleClick="titleClick">
               <span slot="title">
-                <a-icon type="user" />我的部员
+                <a-icon type="user" />
+                <span>我的部员</span>
               </span>
               <a-menu-item key="5" @click="activeClick(0)">部员名单</a-menu-item>
             </a-sub-menu>
 
             <a-sub-menu key="2" @titleClick="titleClick">
               <span slot="title">
-                <a-icon type="laptop" />一面情况
+                <a-icon type="laptop" />
+                <span>一面情况</span>
               </span>
               <a-menu-item key="6" @click="activeClick(1)">待面试成员</a-menu-item>
               <a-menu-item key="7" @click="activeClick(2)">已面试成员</a-menu-item>
             </a-sub-menu>
 
-            <a-sub-menu key="3" @titleClick="titleClick">
+            <a-sub-menu key="3" @titleClick="titleClick" v-if="showSecond">
               <span slot="title">
-                <a-icon type="notification" />二面情况
+                <a-icon type="notification" />
+                <span>二面情况</span>
               </span>
               <a-menu-item key="8" @click="activeClick(3)">待面试成员</a-menu-item>
               <a-menu-item key="9" @click="activeClick(4)">已面试成员</a-menu-item>
@@ -113,14 +116,16 @@ export default {
         "待面试人员",
         "已面试成员",
         "待面试人员",
-        "已面试成员"
+        "已面试成员",
       ],
       clickedTitle: "设置",
       clickedHandle: "部门信息自定义",
       theme: "dark",
       current: "1",
       name: "",
-      show: false
+      show: false,
+      collapsed: false,
+      showSecond: true,
     };
   },
   mounted() {
@@ -137,6 +142,9 @@ export default {
     } else {
       this.name = this.$store.state.home.name;
     }
+    if (this.$store.state.login.turns != 2) {
+      this.showSecond = false;
+    }
   },
   /**
    * @description方法
@@ -147,8 +155,8 @@ export default {
     handleClick: Methods.handleClick,
     titleClick: Methods.titleClick,
     changeTheme: Methods.changeTheme,
-    logOut: Methods.logOut
-  }
+    logOut: Methods.logOut,
+  },
 };
 </script>
 

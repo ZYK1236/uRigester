@@ -40,7 +40,7 @@
       </div>
       <a-divider />
       <div id="button">
-        <a-button size="large" disabled="true">查看二维码</a-button>
+        <a-button size="large" @click="download">下载部员名单</a-button>
         <a-button size="large" type="primary" @click="submit">修改/确认</a-button>
       </div>
     </div>
@@ -60,6 +60,7 @@ export default {
     this.spinning = false;
     this.defaultWeChat.push(...data);
     this.turns = data_2.data.interviewRounds + "";
+
     store.commit({
       type: "setParam",
       param4: data_2.data.param4Name,
@@ -122,7 +123,18 @@ export default {
       });
     },
 
+    async download() {
+      await Api.download({
+        departmentId: store.state.login.departmentID,
+      });
+    },
+
     async submit() {
+      this.$store.commit({
+        type: "SET_TURNS",
+        turns: this.turns,
+      });
+
       if (this.defaultWeChat.length === 0 || this.checkedList.length !== 5) {
         this.$notification.open({
           message: "消息提示",
@@ -158,6 +170,10 @@ export default {
             icon: <a-icon type="smile" style="color: #108ee9" />,
             duration: 2,
           });
+
+          setTimeout(() => {
+            this.$router.go(0);
+          }, 1000);
         } catch (error) {
           this.$notification.open({
             message: "消息提示",
@@ -166,10 +182,6 @@ export default {
             duration: 2,
           });
         }
-
-        setTimeout(() => {
-          this.$router.go(0);
-        }, 1000);
       }
     },
   },

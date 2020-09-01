@@ -45,7 +45,7 @@
         >记住密码</a-checkbox>
         <router-link :to="{name: 'Register'}" class="login-form-forgot">注册账户</router-link>
         <a-form-item>
-          <a-button type="primary" html-type="submit" class="login-form-button">Log in(测试版)</a-button>
+          <a-button type="primary" html-type="submit" class="login-form-button">登陆</a-button>
           <a-button class="login-form-button" @click="stepIn">已登录，直接进入</a-button>
         </a-form-item>
       </a-form>
