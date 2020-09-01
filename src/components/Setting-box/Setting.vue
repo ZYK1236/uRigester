@@ -40,7 +40,7 @@
       </div>
       <a-divider />
       <div id="button">
-        <a-button size="large" @click="download">下载部员名单</a-button>
+        <a-button size="large" :href="memberListExcelUrl">下载部员名单</a-button>
         <a-button size="large" type="primary" @click="submit">修改/确认</a-button>
       </div>
     </div>
@@ -101,6 +101,14 @@ export default {
         }
       },
       deep: true,
+    },
+  },
+  computed: {
+    memberListExcelUrl() {
+      return (
+        "https://xdvolunteer.xyz/department/export?departmentId=" +
+        store.state.login.departmentID
+      );
     },
   },
   methods: {
