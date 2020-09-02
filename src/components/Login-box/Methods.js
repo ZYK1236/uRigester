@@ -17,7 +17,6 @@ const Methods = {
         try {
           this.status = "validating";
           let result = await Api.Login(data);
-          console.log(result);
 
           if (result.code === 2000) {
             this.$store.commit({
@@ -51,6 +50,14 @@ const Methods = {
               type: "SET_DEPARTMENTNAME",
               departmentName: result.data.t.departmentName,
             });
+            let data_2 = await Api.getInterviewMsg(
+              this.$store.state.login.departmentID
+            );
+            const turns = data_2.data.interviewRounds + "";
+            this.$store.commit({
+              type: "SET_TURNS",
+              turns,
+            });
             this.status = "success";
             setTimeout(() => {
               this.$router.push({ name: "Home" });
@@ -65,16 +72,6 @@ const Methods = {
       } else {
         this.status = "error";
       }
-    });
-
-    const data_2 = await Api.getInterviewMsg(
-      this.$store.state.login.departmentID
-    );
-
-    const turns = data_2.data.interviewRounds + "";
-    this.$store.commit({
-      type: "SET_TURNS",
-      turns,
     });
   },
 
