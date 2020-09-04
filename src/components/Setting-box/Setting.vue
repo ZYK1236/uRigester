@@ -49,7 +49,6 @@
 <script>
 import Api from "../../api/api.js";
 import store from "../../store/store.js";
-const plainOptions = ["性格", "礼貌", "技术水平"];
 const defaultCheckedList = ["性格", "礼貌", "技术水平"];
 
 export default {
@@ -66,16 +65,19 @@ export default {
       param4: data_2.data.param4Name,
       param5: data_2.data.param5Name,
     });
-    if (this.plainOptions.length === 3) {
+
+    if (data_2.data.param4Name && data_2.data.param5Name) {
       this.plainOptions.push(data_2.data.param4Name, data_2.data.param5Name);
     }
+
+    console.log(this.plainOptions);
   },
   data() {
     return {
       defaultWeChat: [],
       checkedList: defaultCheckedList,
       checkAll: false,
-      plainOptions,
+      plainOptions: ["性格", "礼貌", "技术水平"],
       valueLength: 0,
       watchedValue: [],
       turns: "1",
