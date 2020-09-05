@@ -49,7 +49,7 @@
 <script>
 import Api from "../../api/api.js";
 import store from "../../store/store.js";
-const defaultCheckedList = ["性格", "礼貌", "技术水平"];
+const defaultCheckedList = ["性格", "礼貌"];
 
 export default {
   async mounted() {
@@ -62,12 +62,21 @@ export default {
 
     store.commit({
       type: "setParam",
+      param3: data_2.data.param3Name,
       param4: data_2.data.param4Name,
       param5: data_2.data.param5Name,
     });
 
-    if (data_2.data.param4Name && data_2.data.param5Name) {
-      this.plainOptions.push(data_2.data.param4Name, data_2.data.param5Name);
+    if (
+      data_2.data.param3Name &&
+      data_2.data.param4Name &&
+      data_2.data.param5Name
+    ) {
+      this.plainOptions.push(
+        data_2.data.param3Name,
+        data_2.data.param4Name,
+        data_2.data.param5Name
+      );
     }
 
     console.log(this.plainOptions);
@@ -77,7 +86,7 @@ export default {
       defaultWeChat: [],
       checkedList: defaultCheckedList,
       checkAll: false,
-      plainOptions: ["性格", "礼貌", "技术水平"],
+      plainOptions: ["性格", "礼貌"],
       valueLength: 0,
       watchedValue: [],
       turns: "1",
@@ -88,7 +97,7 @@ export default {
     watchedValue: {
       handler(newVal, oldVal) {
         // let targetIndex = this.plainOptions.length
-        this.plainOptions = this.plainOptions.slice(0, 3).concat(newVal);
+        this.plainOptions = this.plainOptions.slice(0, 2).concat(newVal);
         if (oldVal.length < newVal.length) {
           if ((this.checkAll = true)) {
             this.checkAll = false;

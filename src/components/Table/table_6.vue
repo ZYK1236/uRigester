@@ -6,7 +6,7 @@
         :disabled="!hasSelected"
         :loading="loading"
         @click="activateModal"
-      >发送面试通知短信</a-button>
+      >发送录取短信</a-button>
       <a-modal v-model="isVisible_1" title="短信信息" @ok="checkIfLegal">
         <a-input v-model="time" placeholder="群号" style="margin-top:20px">
           <a-icon slot="prefix" type="clock-circle" />

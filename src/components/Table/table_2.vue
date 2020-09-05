@@ -47,7 +47,7 @@ const columns = [
     dataIndex: "param2Score",
   },
   {
-    title: "技术水平",
+    title: store.state.department.param3,
     dataIndex: "param3Score",
   },
   {
