@@ -137,7 +137,7 @@ const Api = {
   backToRetest(data) {
     return service({
       method: "post",
-      url: "/interview/status/retest/check",
+      url: "/interview/status/back/unretest",
       data,
     });
   },

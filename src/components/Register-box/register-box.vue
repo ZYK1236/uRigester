@@ -85,39 +85,39 @@ export default {
       result: "#", //转态存储
       party: ["青年志愿者协会", "校团委", "校学生会", "社联"],
       partyId: {
-        "青年志愿者协会": 0,
-        "校团委": 1,
-        "校学生会": 2,
-        "社联": 3
+        青年志愿者协会: 0,
+        校团委: 1,
+        校学生会: 2,
+        社联: 3,
       },
       ruleForm: {
         party: "",
         pass: "",
         checkPass: "",
         name: "",
-        branch: ""
+        branch: "",
       },
       rules: {
         party: [
           {
             required: true,
             message: "请选择组织!",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
         pass: [{ validator: validatePass, trigger: "change" }],
         checkPass: [{ validator: validatePass2, trigger: "change" }],
         name: [{ validator: checkName, trigger: "change" }],
-        branch: [{ validator: checkName, trigger: "change" }]
+        branch: [{ validator: checkName, trigger: "change" }],
       },
       layout: {
         labelCol: { span: 5 },
-        wrapperCol: { span: 19 }
-      }
+        wrapperCol: { span: 19 },
+      },
     };
   },
   components: {
-    ValiDate
+    ValiDate,
   },
   methods: {
     async submitForm(formName) {
@@ -138,7 +138,7 @@ export default {
       if (this.result === "success" || this.$store.state.validate.validate) {
         this.show = false;
         clearInterval(timer);
-        this.$refs[formName].validate(async valid => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
             console.log(this.ruleForm);
             const data = {
@@ -146,7 +146,7 @@ export default {
               organizationId: this.partyId[this.ruleForm.party],
               departmentName: this.ruleForm.party + this.ruleForm.branch,
               departmentAccount: this.ruleForm.name,
-              departmentPwd: this.ruleForm.pass
+              departmentPwd: this.ruleForm.pass,
             };
             try {
               let result = await Api.Register(data);
@@ -155,7 +155,7 @@ export default {
                   message: "消息提示",
                   description: "注册成功,正在跳转页面...",
                   icon: <a-icon type="smile" style="color: #108ee9" />,
-                  duration: 0.8
+                  duration: 0.8,
                 });
                 setTimeout(() => {
                   this.$router.push({ name: "Login" });
@@ -197,29 +197,43 @@ export default {
           resolve("error");
         }, 10000);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
-#alert
-  width: 40%
-  margin: 0 auto
-  z-index: 10
-#form
-  position: fixed
-  width: 30%
-  padding: 20px 50px
-  top: 200px
-  right: 0
-  left: 0
-  margin: 0 auto
-  background-color: rgba(255, 255, 255, 0.7)
-  border-radius: 10px
-@media (max-width: 350px)
-    #form
-        width: 250px
-        height: 560px
-        top: 30px
+#alert {
+  width: 40%;
+  margin: 0 auto;
+  z-index: 10;
+}
+
+#form {
+  position: fixed;
+  width: 30%;
+  padding: 20px 50px;
+  top: 200px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+}
+
+@media (max-width: 350px) {
+  #form {
+    width: 250px;
+    height: 560px;
+    top: 30px;
+  }
+}
+
+@media (max-width: 450px) and (min-width: 350px) {
+  #form {
+    width: 350px;
+    height: 560px;
+    top: 30px;
+  }
+}
 </style>

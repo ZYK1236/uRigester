@@ -58,7 +58,7 @@ import Methods from "./Methods";
 export default {
   data() {
     return {
-      status: ""
+      status: "",
     };
   },
   beforeCreate() {
@@ -66,41 +66,77 @@ export default {
   },
   methods: {
     handleSubmit: Methods.handleSubmit,
-    stepIn: Methods.stepIn
-  }
+    stepIn: Methods.stepIn,
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
-h1
-  position: fixed
-  width: 250px
-  left: 0
-  top: 150px
-  right: 0
-  margin: 0 auto
-  font-size: 60px
-  color: whitesmoke
-#form
-  position: fixed
-  width: 30%
-  padding: 20px 50px
-  top: 280px
-  right: 0
-  left: 0
-  margin: 0 auto
-  background-color: rgba(255, 255, 255, 0.7)
-  border-radius: 10px
-#components-form-demo-normal-login .login-form
-  max-width: 300px
-#components-form-demo-normal-login .login-form-forgot
-  float: right
-#components-form-demo-normal-login .login-form-button
-  width: 100%
-@media (max-width: 350px)
-    #form
-        width: 250px
-        height: 250px
-    #logo
-        display: none
+h1 {
+  position: fixed;
+  width: 250px;
+  left: 0;
+  top: 150px;
+  right: 0;
+  margin: 0 auto;
+  font-size: 60px;
+  color: whitesmoke;
+}
+
+#form {
+  position: fixed;
+  width: 30%;
+  padding: 20px 50px;
+  top: 280px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+}
+
+#components-form-demo-normal-login .login-form {
+  max-width: 300px;
+}
+
+#components-form-demo-normal-login .login-form-forgot {
+  float: right;
+}
+
+#components-form-demo-normal-login .login-form-button {
+  width: 100%;
+}
+
+@media (max-width: 350px) {
+  #form {
+    width: 250px;
+    height: 250px;
+  }
+
+  #logo {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) and (min-width: 350px) {
+  #form {
+    width: 350px;
+    height: 350px;
+  }
+
+  #logo {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 450px) {
+  #form {
+    width: 550px;
+    height: 450px;
+  }
+
+  #logo {
+    display: none;
+  }
+}
 </style>

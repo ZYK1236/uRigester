@@ -93,7 +93,7 @@ export default {
       },
       data: [],
       loading: true,
-      backTo: "捞回录取",
+      backTo: "捞回二面未面试",
     };
   },
   computed: {
@@ -135,7 +135,7 @@ export default {
       this.pageSetter.total = this.data.total - i;
 
       try {
-        await Api.enrollPeople({
+        await Api.backToRetest({
           organizationId: store.state.login.organizationID,
           departmentId: store.state.login.departmentID,
           departmentName: store.state.home.name,
