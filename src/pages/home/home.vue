@@ -62,8 +62,8 @@
         </a-layout-sider>
         <a-layout style="padding: 0 24px 24px">
           <a-breadcrumb style="margin: 16px 0">
-            <a-breadcrumb-item>{{ clickedTitle }}</a-breadcrumb-item>
-            <a-breadcrumb-item>{{ clickedHandle }}</a-breadcrumb-item>
+            <a-breadcrumb-item style="color: black">{{ clickedTitle }}</a-breadcrumb-item>
+            <a-breadcrumb-item style="color: black">{{ clickedHandle }}</a-breadcrumb-item>
           </a-breadcrumb>
           <div id="introduce">
             <span style="display:inline-block">欢迎你:{{name}}</span>

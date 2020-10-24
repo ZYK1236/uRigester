@@ -79,10 +79,13 @@ export default {
       pageSize: 1000,
       departmentName: store.state.home.name,
     });
-
     this.loading = false;
     this.pageSetter.total = data.total;
     this.data = this.data.concat(data.list);
+    let i = 0;
+    this.data.forEach((element) => {
+      element.key = i++;
+    });
   },
   data() {
     return {
