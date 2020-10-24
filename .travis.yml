@@ -8,5 +8,5 @@ before_install:
 script:
   - yarn build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t xdzyk/uRegister:latest
-  - docker push xdzyk/uRegister:latest
+  - docker image build ./ -t xdzyk/uRegister:latest
+  - docker image push xdzyk/uRegister:latest
