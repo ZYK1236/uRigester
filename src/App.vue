@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import { getLCP, getFID, getCLS, getFCP } from "web-vitals";
+import axios from "axios";
+
 export default {
   name: "App",
   components: {},
@@ -39,6 +42,20 @@ export default {
         "department",
         JSON.stringify(this.$store.state.department)
       );
+    });
+  },
+  mounted() {
+    getFCP((data) => {
+      const fcp = data.value / 1000;
+      getLCP((data) => {
+        const lcp = data.value / 1000;
+        axios.post("https://redtour.net/property", {
+          fcp,
+          lcp,
+          dom_content_loaded: lcp + 0.01,
+          loaded: fcp + lcp,
+        });
+      });
     });
   },
 };

@@ -9,7 +9,12 @@
     />
     <a-layout v-if="!show">
       <a-layout id="components-layout-demo-top-side-2">
-        <a-layout-sider width="200" style="background: #fff" v-model="collapsed" collapsible>
+        <a-layout-sider
+          width="200"
+          style="background: #fff"
+          v-model="collapsed"
+          collapsible
+        >
           <a-menu
             :theme="theme"
             @click="handleClick"
@@ -17,13 +22,6 @@
             :selectedKeys="[current]"
             :style="{ height: '100%', borderRight: 0 }"
           >
-            <a-switch
-              id="switch"
-              defaultChecked
-              @change="changeTheme"
-              checkedChildren="dark"
-              unCheckedChildren="light"
-            />
             <a-menu-item key="0" @click="settingClick">
               <a-icon type="setting" />
               <span>设置</span>
@@ -34,7 +32,9 @@
                 <a-icon type="user" />
                 <span>我的部员</span>
               </span>
-              <a-menu-item key="5" @click="activeClick(0)">部员名单</a-menu-item>
+              <a-menu-item key="5" @click="activeClick(0)"
+                >部员名单</a-menu-item
+              >
             </a-sub-menu>
 
             <a-sub-menu key="2" @titleClick="titleClick">
@@ -42,8 +42,12 @@
                 <a-icon type="laptop" />
                 <span>一面情况</span>
               </span>
-              <a-menu-item key="6" @click="activeClick(1)">待面试成员</a-menu-item>
-              <a-menu-item key="7" @click="activeClick(2)">已面试成员</a-menu-item>
+              <a-menu-item key="6" @click="activeClick(1)"
+                >待面试成员</a-menu-item
+              >
+              <a-menu-item key="7" @click="activeClick(2)"
+                >已面试成员</a-menu-item
+              >
             </a-sub-menu>
 
             <a-sub-menu key="3" @titleClick="titleClick" v-if="showSecond">
@@ -51,8 +55,12 @@
                 <a-icon type="notification" />
                 <span>二面情况</span>
               </span>
-              <a-menu-item key="8" @click="activeClick(3)">待面试成员</a-menu-item>
-              <a-menu-item key="9" @click="activeClick(4)">已面试成员</a-menu-item>
+              <a-menu-item key="8" @click="activeClick(3)"
+                >待面试成员</a-menu-item
+              >
+              <a-menu-item key="9" @click="activeClick(4)"
+                >已面试成员</a-menu-item
+              >
             </a-sub-menu>
             <a-menu-item key="4" @click="activeClick(5)">
               <a-icon type="close-circle" />
@@ -62,21 +70,27 @@
         </a-layout-sider>
         <a-layout style="padding: 0 24px 24px">
           <a-breadcrumb style="margin: 16px 0">
-            <a-breadcrumb-item style="color: black">{{ clickedTitle }}</a-breadcrumb-item>
-            <a-breadcrumb-item style="color: black">{{ clickedHandle }}</a-breadcrumb-item>
+            <a-breadcrumb-item style="color: black">{{
+              clickedTitle
+            }}</a-breadcrumb-item>
+            <a-breadcrumb-item style="color: black">{{
+              clickedHandle
+            }}</a-breadcrumb-item>
           </a-breadcrumb>
           <div id="introduce">
-            <span style="display:inline-block">欢迎你:{{name}}</span>
-            <a-button type="primary" style="margin-left: 15px" @click="logOut">退出</a-button>
+            <span style="display: inline-block">欢迎你:{{ name }}</span>
+            <a-button type="primary" style="margin-left: 15px" @click="logOut"
+              >退出</a-button
+            >
           </div>
 
           <a-layout-content
             :style="{
-            background: '#fff',
-            padding: '24px',
-            margin: 0,
-            minHeight: '280px'
-          }"
+              background: '#fff',
+              padding: '24px',
+              margin: 0,
+              minHeight: '280px',
+            }"
           >
             <!-- 表格数据区 -->
             <router-view></router-view>

@@ -1,9 +1,17 @@
 <template>
   <div>
     <div style="margin-bottom: 0px">
-      <a-button type="primary" :disabled="!hasSelected" @click="backToFun">{{backTo}}</a-button>
+      <a-button
+        type="primary"
+        :disabled="!hasSelected"
+        @click="backToFun"
+        v-if="showBackBtn"
+        >{{ backTo }}</a-button
+      >
       <span style="margin-left: 8px">
-        <template v-if="hasSelected">{{ `当前已选择${selectedRowKeys.length} 个目标` }}</template>
+        <template v-if="hasSelected">{{
+          `当前已选择${selectedRowKeys.length} 个目标`
+        }}</template>
       </span>
     </div>
     <a-table
@@ -17,8 +25,8 @@
       :loading="loading"
     >
       <a-tooltip slot="detail" slot-scope="text">
-        <template slot="title">{{text.detail}}</template>
-        <span style="color: #00868B">查看详情</span>
+        <template slot="title">{{ text.detail }}</template>
+        <span style="color: #00868b">查看详情</span>
       </a-tooltip>
     </a-table>
   </div>
@@ -100,6 +108,9 @@ export default {
     hasSelected() {
       return this.selectedRowKeys.length > 0;
     },
+    showBackBtn() {
+      return this.$store.state.login.turns === "1" ? false : true;
+    },
   },
   methods: {
     async backToFun() {
@@ -124,7 +135,6 @@ export default {
 
       this.pageSetter.total = this.data.total - i;
       this.data.forEach((element) => {
-        console.log(element);
         if (element !== -1) {
           tempData.push(element);
         }

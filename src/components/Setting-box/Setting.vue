@@ -12,7 +12,7 @@
         :defaultValue="defaultWeChat"
         placeholder="输入微信ID"
       ></a-select>
-      <h2 id="title">*当前面试轮次</h2>
+      <h2 id="title">*面试轮次</h2>
       <a-radio-group
         @change="demo"
         :defaultValue="1"
@@ -24,7 +24,7 @@
         <a-radio-button value="2">二轮</a-radio-button>
       </a-radio-group>
 
-      <h2 id="title">*当前评价参数(必须5个)</h2>
+      <h2 id="title">*评价参数(必须5个)</h2>
       <div id="checkBox">
         <div>
           <a-checkbox @change="onCheckAllChange" :checked="checkAll">Check all</a-checkbox>

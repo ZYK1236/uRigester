@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div style="margin-bottom: 0px">
+    <div style="margin-bottom: 10px">
       <a-button type="danger" @click="low">不通过</a-button>
-      <a-button type="primary" ghost style="margin-left: 30px" @click="pass">{{StepInOrEnroll}}</a-button>
+      <a-button type="primary" ghost style="margin-left: 30px" @click="pass">{{
+        StepInOrEnroll
+      }}</a-button>
       <span style="margin-left: 8px">
-        <template v-if="hasSelected">{{ `当前已选择${selectedRowKeys.length} 个目标` }}</template>
+        <template v-if="hasSelected">{{
+          `当前已选择${selectedRowKeys.length} 个目标`
+        }}</template>
       </span>
     </div>
     <a-table
@@ -21,8 +25,8 @@
         <span v-html="text"></span>
       </tr>
       <a-tooltip slot="detail" slot-scope="text">
-        <template slot="title">{{text.detail}}</template>
-        <span style="color: #00868B">查看详情</span>
+        <template slot="title">{{ text.detail }}</template>
+        <span style="color: #00868b">查看详情</span>
       </a-tooltip>
     </a-table>
   </div>

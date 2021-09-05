@@ -4,6 +4,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "./style/global.styl";
 import store from "./store/store";
+import Vue from "vue";
 import {
   Form,
   FormModel,
@@ -24,7 +25,7 @@ import {
   Table,
   Modal,
   Spin,
-  Tooltip
+  Tooltip,
 } from "ant-design-vue";
 
 Vue.config.productionTip = false;
@@ -50,7 +51,6 @@ Vue.use(Table);
 Vue.use(Modal);
 Vue.use(Spin);
 Vue.use(Tooltip);
-
 
 new Vue({
   store,
