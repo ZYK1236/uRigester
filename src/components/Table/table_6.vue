@@ -6,16 +6,25 @@
         :disabled="!hasSelected"
         :loading="loading"
         @click="activateModal"
-      >发送录取短信</a-button>
+        style="margin-bottom: 10px"
+        >发送录取短信</a-button
+      >
       <a-modal v-model="isVisible_1" title="短信信息" @ok="checkIfLegal">
-        <a-input v-model="time" placeholder="群号" style="margin-top:20px">
+        <a-input v-model="time" placeholder="群号" style="margin-top: 20px">
           <a-icon slot="prefix" type="clock-circle" />
         </a-input>
-        <a-alert message="群号不得为空！" banner style="margin-top:5px" v-if="isTimeIllegal" />
+        <a-alert
+          message="群号不得为空！"
+          banner
+          style="margin-top: 5px"
+          v-if="isTimeIllegal"
+        />
       </a-modal>
 
       <span style="margin-left: 8px">
-        <template v-if="hasSelected">{{ `当前已选择${selectedRowKeys.length} 个目标` }}</template>
+        <template v-if="hasSelected">{{
+          `当前已选择${selectedRowKeys.length} 个目标`
+        }}</template>
       </span>
     </div>
     <a-table
@@ -76,8 +85,12 @@ export default {
     });
 
     this.loading = false;
-    this.pageSetter.total = data.total;
-    this.data = this.data.concat(data.list);
+    if (data && data.total) {
+      this.pageSetter.total = data.total;
+    }
+    if (data && data.list) {
+      this.data = this.data.concat(data.list);
+    }
     let i = 0;
     this.data.forEach((element) => {
       element.key = i++;

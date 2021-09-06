@@ -6,9 +6,17 @@
         :disabled="!hasSelected"
         :loading="loading"
         @click="activateModal"
-        style="margin-bottom: 10px"
+        style="margin-bottom: 10px; margin-right: 20px"
         >发送面试通知短信</a-button
       >
+      <a-button
+        @click="chooseAll"
+        style="margin-right: 20px"
+        type="primary"
+        ghost
+        >选中全部</a-button
+      >
+      <a-button @click="cancalChooseAll" type="dashed">取消全选</a-button>
       <a-modal v-model="isVisible_1" title="短信信息" @ok="checkIfLegal">
         <a-input v-model="time" placeholder="时间" style="margin-top: 20px">
           <a-icon slot="prefix" type="clock-circle" />
@@ -110,7 +118,9 @@ export default {
     });
 
     this.loading = false;
-    this.data = this.data.concat(data.list);
+    if (data && data.list) {
+      this.data = this.data.concat(data.list);
+    }
     let i = 0;
     this.data.forEach((element) => {
       element.key = i++;
@@ -204,6 +214,12 @@ export default {
     onSelectChange(selectedRowKeys) {
       console.log("selectedRowKeys changed: ", selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys;
+    },
+    chooseAll() {
+      this.selectedRowKeys = this.data.map((_, index) => index);
+    },
+    cancalChooseAll() {
+      this.selectedRowKeys = [];
     },
   },
 };

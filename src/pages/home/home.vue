@@ -68,7 +68,7 @@
             </a-menu-item>
           </a-menu>
         </a-layout-sider>
-        <a-layout style="padding: 0 24px 24px">
+        <a-layout style="padding: 0 24px 10px">
           <a-breadcrumb style="margin: 16px 0">
             <a-breadcrumb-item style="color: black">{{
               clickedTitle
@@ -79,7 +79,7 @@
           </a-breadcrumb>
           <div id="introduce">
             <span style="display: inline-block">欢迎你:{{ name }}</span>
-            <a-button type="primary" style="margin-left: 15px" @click="logOut"
+            <a-button type="danger" style="margin-left: 15px" @click="logOut"
               >退出</a-button
             >
           </div>
@@ -90,6 +90,7 @@
               padding: '24px',
               margin: 0,
               minHeight: '280px',
+              borderRadius: '12px',
             }"
           >
             <!-- 表格数据区 -->
@@ -159,6 +160,11 @@ export default {
     if (this.$store.state.login.turns != 2) {
       this.showSecond = false;
     }
+    this.$notification.open({
+      message: "欢迎使用 U 报名后台管理系统",
+      description: "如果使用过程中遇到什么问题，可联系QQ: 508603401.",
+      icon: <a-icon type="smile" style="color: #108ee9" />,
+    });
   },
   /**
    * @description方法
@@ -185,7 +191,7 @@ export default {
 
 #introduce {
   position: fixed;
-  right: 60px;
+  right: 24px;
   top: 10px;
 }
 
