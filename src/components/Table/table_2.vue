@@ -85,12 +85,43 @@ export default {
       departmentName: store.state.home.name,
     });
 
-    this.loading = false;
-    if (data && data.total) {
-      this.pageSetter.total = data.total;
+    // 拿录取名单
+    const {
+      data: { list },
+    } = await Api.getMemberMsg({
+      pageNum: 1,
+      pageSize: 1000,
+      departmentId: store.state.login.departmentID,
+    });
+
+    let memberIdList = []; // 已录取的 id
+
+    if (list) {
+      memberIdList = list.map((item) => {
+        return item.userId;
+      });
     }
+
+    // 记录冲突数目
+    let clashNumber = 0;
+    this.loading = false;
+
+    // 去除冲突项
     if (data && data.list) {
-      this.data = this.data.concat(data.list);
+      let list = data.list.slice();
+      memberIdList.forEach((userId) => {
+        list = list.filter((item) => {
+          if (item.userId === userId) {
+            clashNumber += 1;
+            return false;
+          }
+          return true;
+        });
+      });
+      this.data = this.data.concat(list);
+    }
+    if (data && data.total) {
+      this.pageSetter.total = data.total - clashNumber;
     }
     let i = 0;
     this.data.forEach((element) => {

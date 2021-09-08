@@ -69,7 +69,7 @@
           </a-menu>
         </a-layout-sider>
         <a-layout style="padding: 0 24px 10px">
-          <a-breadcrumb style="margin: 16px 0">
+          <a-breadcrumb style="margin: 16px 0; height: 22px">
             <a-breadcrumb-item style="color: black">{{
               clickedTitle
             }}</a-breadcrumb-item>

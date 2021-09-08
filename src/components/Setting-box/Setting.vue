@@ -4,7 +4,9 @@
       <a-spin size="large" :spinning="spinning" />
     </div>
     <div v-if="!spinning">
-      <h2 style="color: #188ffd">*面试官微信小程序id(微信小程序头像下方)，面试官只能增加不能删除</h2>
+      <h2 style="color: #666666">
+        *面试官U报名小程序ID（U报名小程序头像下方），面试官只能增加不能删除
+      </h2>
       <a-select
         mode="tags"
         style="width: 100%"
@@ -27,10 +29,16 @@
       <h2 id="title">*评价参数(必须5个)</h2>
       <div id="checkBox">
         <div>
-          <a-checkbox @change="onCheckAllChange" :checked="checkAll">Check all</a-checkbox>
+          <a-checkbox @change="onCheckAllChange" :checked="checkAll"
+            >Check all</a-checkbox
+          >
         </div>
         <br />
-        <a-checkbox-group :options="plainOptions" v-model="checkedList" @change="onChange" />
+        <a-checkbox-group
+          :options="plainOptions"
+          v-model="checkedList"
+          @change="onChange"
+        />
         <a-select
           mode="tags"
           style="width: 17%"
@@ -40,8 +48,12 @@
       </div>
       <a-divider />
       <div id="button">
-        <a-button size="large" :href="memberListExcelUrl">下载部员名单</a-button>
-        <a-button size="large" type="primary" @click="submit">修改/确认</a-button>
+        <a-button size="large" :href="memberListExcelUrl" :disabled="true"
+          >下载部员名单</a-button
+        >
+        <a-button size="large" type="primary" @click="submit"
+          >修改/确认</a-button
+        >
       </div>
     </div>
   </div>
@@ -49,7 +61,7 @@
 <script>
 import Api from "../../api/api.js";
 import store from "../../store/store.js";
-const defaultCheckedList = ["性格", "礼貌"];
+const defaultCheckedList = [];
 
 export default {
   async mounted() {
@@ -78,8 +90,6 @@ export default {
         data_2.data.param5Name
       );
     }
-
-    console.log(this.plainOptions);
   },
   data() {
     return {
@@ -214,7 +224,7 @@ export default {
 
 #title {
   margin-top: 30px;
-  color: #188ffd;
+  color: #666666;
 }
 
 #radio_group {

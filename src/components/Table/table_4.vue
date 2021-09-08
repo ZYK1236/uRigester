@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom: 0px">
+    <div style="margin-bottom: 10px">
       <a-button type="danger" @click="low">不通过</a-button>
       <a-button type="primary" ghost style="margin-left: 30px" @click="pass"
         >录取为我的部员</a-button
